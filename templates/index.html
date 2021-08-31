@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block body %}
+<header>
+    <div class="title">
+        <h1>Foodify</h1>
+    </div>
+    <div class='buttons2'>
+        <div class="goals">
+            <button type="button" data-modal="modal1" id='goalbtn'>Set Goal</button>
+        </div>
+        <a href="/reset">Reset</a>
+    </div>
+    
+</header>
+
+<main id='main'>
+
+    <div class='section1'>
+        <div class="forms">
+            <div class="form-content">
+                <div class="form-title">
+                    <h2>Add Item</h2>
+                </div>
+                <form action="/" method="POST">
+                    <table class='content'>
+                        <tr>
+                            <th><h2>Food</h2></th>
+                            <th><input type="text" name="food" class="key" placeholder="Enter Food Item" autocomplete="off" required></th>
+                        </tr>
+                        <tr>
+                            <th><h2>Calories</h2></th>
+                            <th><input type="number" step="any"name="calories" class="key" placeholder="Enter # of calories" autocomplete="off" required></th>
+                        </tr>
+                        <tr>
+                            <th><h2>Fat (g)</h2></th>
+                            <th><input type="number" step="any" name="fat" id="fat" placeholder="Enter amount of fat" autocomplete="off" required></th>
+                        </tr>
+                        <tr>
+                            <th><h2>Protein (g)</h2></th>
+                            <th><input type="number" step="any" name="protein" id="protein" placeholder="Enter amount of protein" autocomplete="off" required></th>
+                        </tr>
+                        <tr>
+                            <th><h2>Carbs (g)</h2></th>
+                            <th><input type="number"  step="any" name="carbs" id="carbs" placeholder="Enter amount of carbs" autocomplete="off" required></th>
+                        </tr>
+                    </table>
+
+                    <div class="button-form">  
+                        <input type="submit" name="food-log" value="Add">
+                    </div>
+
+                    <div class='help'>
+                        <a href='https://www.myfooddiary.com/foods/' target="_blank">Click Here To Find Nutrition Label For Your Food Item! </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class='section2'>
+        <div class="form-title">
+            <h2>Food Log</h2>
+        </div>
+        <div class='scrollable'>
+            {% if items|length < 1 %}
+            <h3 style="text-align: center">No food items have been added.</h3>
+            <h3 style="text-align: center">Add one below!</h3>
+            {% else %}
+            {% for item in items %}
+            <div class="item-title">
+                <h2 class='food-name'>{{item.food}}</h2>
+            </div>
+            <table class='user-items'>
+                <tr>
+                    <th><h3>Date:</h3></th>
+                    <th><h3>{{item.date_created.date()}}</h3></th>
+                </tr>
+                <tr>
+                    <th><h3>Calories:</h3></th>
+                    <th><h3>{{item.calories}} calorie(s)</h3></th>
+                </tr>
+
+                <tr>
+                    <th><h3>Fat (g):</h3></th>
+                    <th><h3>{{item.fat}}g</h3></th>
+                </tr>
+                <tr>
+                    <th><h3>Protein (g):</h3></th>
+                    <th><h3>{{item.protein}}g</h3></th>
+                </tr>
+                <tr>
+                    <th><h3>Carbs (g):</h3></th>
+                    <th><h3>{{item.carbs}}g</h3></th>
+                </tr>
+                <tr class=buttons>
+                    <th>
+                        <div class="del">
+                            <a id='del'href="/delete/{{item.id}}">Delete</a>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="update">
+                            <a href="/update/{{item.id}}">Update</a>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+            <hr class='spacer'>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    </div class='section3'>
+        <div class="progress-bar" id="p">
+            <div class="form-title">
+                <h2>Summary</h2>
+            </div>
+
+            <div class='test'>
+                <div class="user-progress">
+                    <p>Calorie Progress: {{total_calories}}/{{goals.calories_goal}} calories</p>
+                    <progress max="{{goals.calories_goal}}" id="calorie" value="{{total_calories}}"></progress>
+                </div>
+
+                <div class="user-progress">
+                    <p>Fat Progress: {{total_fat}}/{{goals.fat_goal}}g</p>
+                    <progress max="{{goals.fat_goal}}" value="{{total_fat}}"></progress>
+                </div>
+
+                <div class="user-progress">
+                    <p>Protein Progress: {{total_protein}}/{{goals.protein_goal}}g</p>
+                    <progress max="{{goals.protein_goal}}" value="{{total_protein}}"></progress>
+                </div>
+            
+                <div class="user-progress">
+                    <p>Carbs Progress: {{total_carbs}}/{{goals.carbs_goal}}g</p>
+                    <progress max="{{goals.carbs_goal}}" value="{{total_carbs}}"></progress>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+<div class="modal" id="modal1">
+    <div class="modal-content">
+        <div class="modal-form">
+            <div class="form-title">
+                <h2>My Goals</h2>
+            </div>
+            
+            <div class="form-content">
+                <form action="/" method="POST">
+                    <table class='content' id='goaltable'>
+                        <tr>
+                            <th><h2>Calories Goal</h2></th>
+                            <th><input type="number" name="calorie-goal" id="calorie-goal" placeholder="Enter your calories goal" autocomplete="off" required></th>
+                        </tr>
+                        <tr>
+                            <th><h2>Fat Goal (g)</h2></th>
+                            <th><input type="number" name="fat-goal" id="fat-goal" placeholder="Enter your fat goal" autocomplete="off" required></th>
+                        </tr>
+                        <tr>
+                            <th><h2>Protein Goal (g)</h2></th>
+                            <th><input type="number" name="protein-goal" id="protein-goal" placeholder="Enter your protein goal" autocomplete="off" required></th>
+                        </tr>
+                        <tr>
+                            <th><h2>Carbs Goal (g)</h2></th>
+                            <th><input type="number" name="carbs-goal" id="carbs-goal" placeholder="Enter your carbs goal" autocomplete="off" required></th>
+                        </tr>
+                    </table>
+
+                    <div class="button-form">  
+                        <input type="submit" name="goals" value="Set" id='goalsadd'>
+                        <button class="close-modal">Close</button>
+                    </div>
+                </form>
+            </div>
+</div>
+
+{% endblock %}

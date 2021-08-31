@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<div class="title" id='updatetitle'>
+    <h1>Foodify</h1>
+</div>
+{% endblock %}
+
+{% block body %}
+
+<div class="forms" id='updateform'>
+    <div class="form-content" >
+        <div class="form-title">
+            <h2>Update Item</h2>
+        </div>
+        <form action="/update/{{item.id}}" method="POST">
+            <table class='content1'>
+                <tr>
+                    <th><h2>Food</h2></th>
+                    <th><input type="text" name="food" class="key" placeholder="Enter Food Item" autocomplete="off" required value="{{item.food}}"></th>
+                </tr>
+                <tr>
+                    <th><h2>Calories</h2></th>
+                    <th><input type="number" step="any"name="calories" class="key" placeholder="Enter # of calories" autocomplete="off" required value="{{item.calories}}"></th>
+                </tr>
+                <tr>
+                    <th><h2>Fat (g)</h2></th>
+                    <th><input type="number" step="any" name="fat" id="fat" placeholder="Enter amount of fat" autocomplete="off" required value="{{item.fat}}"></th>
+                </tr>
+                <tr>
+                    <th><h2>Protein (g)</h2></th>
+                    <th><input type="number" step="any" name="protein" id="protein" placeholder="Enter amount of protein" autocomplete="off" required value="{{item.protein}}"></th>
+                </tr>
+                <tr>
+                    <th><h2>Carbs (g)</h2></th>
+                    <th><input type="number"  step="any" name="carbs" id="carbs" placeholder="Enter amount of carbs" autocomplete="off" required value="{{item.carbs}}"></th>
+                </tr>
+            </table>
+
+            <div class="button-form">  
+                <input type="submit" name="food-log" value="Update">
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
