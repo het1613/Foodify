@@ -1,4 +1,4 @@
-# Foodify
+# Foodify 
 A web app to track daily food/nutrient intake along side setting dietary goals You can access the app [here](https://foodify-het-patel.herokuapp.com/).
 
 ![](https://www.hetpatel.site/img/foodify.png)
